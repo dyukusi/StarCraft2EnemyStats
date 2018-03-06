@@ -4,9 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import javax.swing.*;
-import net.miginfocom.swing.*;
-import org.jdesktop.beansbinding.*;
-import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
+import net.miginfocom.swing.MigLayout;
+
 /*
  * Created by JFormDesigner on Wed Feb 28 20:20:57 JST 2018
  */
