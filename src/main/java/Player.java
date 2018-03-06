@@ -2,6 +2,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 public class Player {
+    private Region region;
     private int playerId;
     private String name;
     private UserType userType;
@@ -14,6 +15,7 @@ public class Player {
     private int playedCount;
     private int rating;
     private int leagueId;
+    private int ladderId;
     private int points;
     private int wins;
     private int losses;
@@ -31,7 +33,8 @@ public class Player {
     private long lastPlayedAt;
     private long createdAt;
 
-    Player(int playerId, String name, UserType type, Race race) {
+    Player(Region region, int playerId, String name, UserType type, Race race) {
+        this.region = region;
         this.playerId = playerId;
         this.name = name;
         this.userType = type;
@@ -42,7 +45,7 @@ public class Player {
 
         try {
             // fetch profile by sc2logs api if user
-            JsonArray profileJsonArray = Util.getJsonByURL(String.format(Constant.BASE_URL_OF_SC2LOGS_API, name, this.race.name())).getAsJsonArray();
+            JsonArray profileJsonArray = Util.getJsonByURL(String.format(Constant.BASE_URL_OF_SC2LOGS_API_SEARCH, this.region.name(), name, this.race.name())).getAsJsonArray();
             if (profileJsonArray.size() <= 0) return;
 
             // regard first element as correct one. this depends on how is API implemented
@@ -51,6 +54,7 @@ public class Player {
             this.battleTag = profileJson.get("battle_tag").getAsString();
             this.playedCount = profileJson.get("played_count").getAsInt();
             this.leagueId = profileJson.get("league_id").getAsInt();
+            this.ladderId = profileJson.get("ladder_id").getAsInt();
             this.rating = profileJson.get("rating").getAsInt();
             this.points = profileJson.get("points").getAsInt();
             this.wins = profileJson.get("wins").getAsInt();
@@ -127,9 +131,29 @@ public class Player {
         return this.race;
     }
 
-    League getLeague() {
+    Region getRegion() {
+        return this.region;
+    }
+
+    int getProfileId() {
+        return this.profileId;
+    }
+
+    UserType getUserType() {
+        return this.userType;
+    }
+
+    int getRating() {
+        return this.rating;
+    }
+
+    int getPlayerId() {
+        return this.playerId;
+    }
+
+    Leagues getLeague() {
         if (!this.hasDetailProfile) return null;
-        return League.getLeagueById(this.leagueId);
+        return Leagues.getLeagueById(this.leagueId);
     }
 
     // ---------------- methods for output text ---------------

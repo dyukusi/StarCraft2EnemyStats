@@ -1,8 +1,10 @@
 import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) throws InterruptedException, IOException {
+    static GUI g;
+
+    public static void main(String[] args) {
         System.out.println("StarCraft2EnemyStats started.");
-        new EnemyStats().run();
+        g = new GUI();
     }
 }

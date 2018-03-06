@@ -1,10 +1,12 @@
-import java.util.HashMap;
-import java.util.Map;
-
 public class Constant {
     public static String OWN_NAME = "Dyukusi";
 
-    public static final String BASE_URL_OF_SC2LOGS_API = "http://ec2-13-115-175-110.ap-northeast-1.compute.amazonaws.com:8080/search?name=%s&race=%s";
+    public static final String BASE_URL_OF_SC2LOGS_API_SEARCH = "http://ec2-13-115-175-110.ap-northeast-1.compute.amazonaws.com:8080/search?region=%s&name=%s&race=%s";
+    public static final String BASE_URL_OF_SC2LOGS_API_UPDATE = "http://ec2-13-115-175-110.ap-northeast-1.compute.amazonaws.com:8080/update?regionId=%d&profileId=%d&raceId=%d";
+    //public static final String BASE_URL_OF_SC2LOGS_API_UPDATE = "http://localhost:8080/update";
+    //public static final String BASE_URL_OF_SC2LOGS_API_UPDATE = "http://localhost:8080/update?regionId=%d&profileId=%d&raceId=%d";
+    public static final String BASE_URL_OF_SC2LOGS_API_LEAGUE = "http://ec2-13-115-175-110.ap-northeast-1.compute.amazonaws.com:8080/league?regionId=%d";
+
     public static final String BASE_URL_OF_CLIENT_UI_API = "http://localhost:6119/ui";
     public static final String BASE_URL_OF_CLIENT_GAME_API = "http://localhost:6119/game";
 
@@ -15,6 +17,8 @@ public class Constant {
 
     public static final String DEFAULT_CLAN_NAME = "Not belonging";
 
+    public static final String MMR_CHART_IMAGE_PATH = "./output/own/mmrChart.png";
+    public static final String PATH_OF_MMR_LOG = "./output/own/mmrLog.txt";
     public static final String PATH_OF_DUMMY_IMAGE = "./image/other/dummy.png";
     public static final String PATH_OF_UNKNOWN_IMAGE = "./image/other/unknown.png";
     public static final String DEFAULT_UNKNOWN_MARK = "?";
@@ -22,6 +26,8 @@ public class Constant {
     public static final String ONE_HOUR_BEFORE_PLAYER_INFO_TEXT = "1hour before";
     public static final String PREFIX_OF_HOURS_BEFORE_PLAYER_INFO_TEXT = "hours before";
 
+    public static final int MMR_CHART_SIZE_X = 500;
+    public static final int MMR_CHART_SIZE_Y = 300;
 
     public static final int[] LEAGUE_IDS = {
             0, // BRONZE

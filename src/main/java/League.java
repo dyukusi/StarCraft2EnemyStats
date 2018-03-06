@@ -1,40 +1,31 @@
-public enum League {
-    BRONZE      (0, "./image/league/bronze.png"),
-    SILVER      (1, "./image/league/silver.png"),
-    GOLD        (2, "./image/league/gold.png"),
-    PLATINUM    (3, "./image/league/platinum.png"),
-    DIAMOND     (4, "./image/league/diamond.png"),
-    MASTER      (5, "./image/league/master.png"),
-    GRANDMASTER (6, "./image/league/grandmaster.png");
+public class League {
+    private int regionId;
+    private int seasonId;
+    private int queueId;
+    private Leagues league;
+    private int tier;
+    private int minRating;
+    private int maxRating;
 
-    private int id;
-    private String iconPath;
-    League(int id, String iconPath) {
-        this.id = id;
-        this.iconPath = iconPath;
+    public League(int regionId, int seasonId, int queueId, int leagueId, int tier, int minRating, int maxRating) {
+        this.regionId = regionId;
+        this.seasonId = seasonId;
+        this.queueId = queueId;
+        this.league = Leagues.getLeagueById(leagueId);
+        this.tier = tier;
+        this.minRating = minRating;
+        this.maxRating = maxRating;
     }
 
-    int getId() {
-        return this.id;
+    public int getMinRating() {
+        return this.minRating;
     }
 
-    String getIconPath() {
-        return this.iconPath;
+    public Leagues getLeague() {
+        return this.league;
     }
 
-    static League getLeagueById(int id) {
-        for (League league : League.values()) {
-            if (league.getId() == id) return league;
-        }
-        return null;
+    public int getTier() {
+        return this.tier;
     }
 }
-
-
-//            0, // BRONZE
-//                    1, // SILVER
-//                    2, // GOLD
-//                    3, // PLATINUM
-//                    4, // DIAMOND
-//                    5, // MASTER
-//                    6  // GRANDMASTER

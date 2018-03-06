@@ -4,14 +4,14 @@ import com.google.gson.JsonObject;
 import java.util.ArrayList;
 
 public class GameInfo {
-    private String ownName;
     private ArrayList<Player> players;
+    private boolean isReplay;
 
-    GameInfo(String ownName) {
-        this.ownName = ownName;
+    GameInfo(Region region) {
         this.players = new ArrayList<>();
 
         JsonObject gameJson = Util.getJsonByURL(Constant.BASE_URL_OF_CLIENT_GAME_API).getAsJsonObject();
+        this.isReplay = gameJson.get("isReplay").getAsBoolean();
         JsonArray players = gameJson.getAsJsonArray("players");
 
         players.forEach(player -> {
@@ -24,21 +24,21 @@ public class GameInfo {
 
             System.out.println("[" + playerId + "] " + name);
 
-            this.players.add(new Player(playerId, name, userType, race));
+            this.players.add(new Player(region, playerId, name, userType, race));
         });
-    }
-
-    public String getOwnName() {
-        return ownName;
     }
 
     ArrayList<Player> getPlayers() {
         return this.players;
     }
 
-    Player getOwn() {
+    boolean isReplay() {
+        return this.isReplay;
+    }
+
+    Player getPlayer(String name) {
         for (Player player : this.players) {
-            if (player.getName().equals(this.ownName)) {
+            if (player.getName().equals(name)) {
                 return player;
             }
         }
@@ -46,9 +46,9 @@ public class GameInfo {
     }
 
     // NOTE: only supporting 1v1
-    Player getOpponent() {
+    Player getOpponent(String ownName) {
         for (Player player : this.players) {
-            if (!player.getName().equals(this.ownName)) {
+            if (!player.getName().equals(ownName)) {
                 return player;
             }
         }
