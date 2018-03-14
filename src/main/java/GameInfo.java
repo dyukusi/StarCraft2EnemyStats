@@ -26,6 +26,14 @@ public class GameInfo {
 
             this.players.add(new Player(region, playerId, name, userType, race));
         });
+
+        Player ownPlayer = this.getPlayer(Main.g.getPlayerName());
+        ownPlayer.getAdditionalProfile(-1);
+        int rating = ownPlayer.getRating();
+
+        this.players.forEach(player -> {
+            player.getAdditionalProfile(rating);
+        });
     }
 
     ArrayList<Player> getPlayers() {

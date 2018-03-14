@@ -7,7 +7,7 @@ public class Player {
     private String name;
     private UserType userType;
     private Race race;
-    private boolean hasDetailProfile;
+    private boolean hasAdditionalProfile;
 
     // from sc2logs api. only ladder player available
     private String battleTag;
@@ -39,13 +39,18 @@ public class Player {
         this.name = name;
         this.userType = type;
         this.race = race;
-        this.hasDetailProfile = false;
+        this.hasAdditionalProfile = false;
+    }
 
-        if (!this.userType.equals(UserType.User)) return;
+    void getAdditionalProfile(int rating) {
+        if (!this.userType.equals(UserType.User)) {
+            System.out.println("Can not to get additional profile for CPU. just skipped. PlayerName: " + this.name);
+            return;
+        }
 
         try {
             // fetch profile by sc2logs api if user
-            JsonArray profileJsonArray = Util.getJsonByURL(String.format(Constant.BASE_URL_OF_SC2LOGS_API_SEARCH, this.region.name(), name, this.race.name())).getAsJsonArray();
+            JsonArray profileJsonArray = Util.getJsonByURL(String.format(Constant.BASE_URL_OF_SC2LOGS_API_SEARCH, this.region.name(), name, this.race.name(), rating)).getAsJsonArray();
             if (profileJsonArray.size() <= 0) return;
 
             // regard first element as correct one. this depends on how is API implemented
@@ -83,7 +88,7 @@ public class Player {
             this.lastPlayedAt = profileJson.get("last_played_at").getAsLong();
             this.createdAt = profileJson.get("created_at").getAsLong();
 
-            this.hasDetailProfile = true;
+            this.hasAdditionalProfile = true;
         } catch (Exception e) {
             System.err.println("error occured on detail profile process.");
             e.printStackTrace();
@@ -152,8 +157,12 @@ public class Player {
     }
 
     Leagues getLeague() {
-        if (!this.hasDetailProfile) return null;
+        if (!this.hasAdditionalProfile) return null;
         return Leagues.getLeagueById(this.leagueId);
+    }
+
+    boolean hasAdditionalProfile() {
+        return this.hasAdditionalProfile;
     }
 
     // ---------------- methods for output text ---------------
@@ -170,23 +179,23 @@ public class Player {
     }
 
     public String makeWinRateText() {
-        if (!this.hasDetailProfile) return Constant.DEFAULT_UNKNOWN_MARK;
+        if (!this.hasAdditionalProfile) return Constant.DEFAULT_UNKNOWN_MARK;
         int winRate = this.calcWinRate();
         return String.valueOf(winRate);
     }
 
     String makeClanNameText() {
-        if (!this.hasDetailProfile) return Constant.DEFAULT_UNKNOWN_MARK;
+        if (!this.hasAdditionalProfile) return Constant.DEFAULT_UNKNOWN_MARK;
         return this.clanName == null ? Constant.DEFAULT_CLAN_NAME : this.clanName;
     }
 
     String makePlayedCountText() {
-        if (!this.hasDetailProfile) return Constant.DEFAULT_UNKNOWN_MARK;
+        if (!this.hasAdditionalProfile) return Constant.DEFAULT_UNKNOWN_MARK;
         return String.valueOf(this.playedCount);
     }
 
     String makeHoursBeforeInfoText() {
-        if (!this.hasDetailProfile) return Constant.DEFAULT_UNKNOWN_MARK;
+        if (!this.hasAdditionalProfile) return Constant.DEFAULT_UNKNOWN_MARK;
         long hoursBefore = this.calcHoursBeforeInfo();
 
         if (hoursBefore == 0) return Constant.RECENT_PLAYER_INFO_TEXT;
@@ -210,7 +219,7 @@ public class Player {
         Util.copyImage(this.getRace().getIconPath(), imageDirPath + "raceIcon.png");
 
         String leagueIconImagePath = imageDirPath + "leagueIcon.png";
-        if (this.hasDetailProfile) Util.copyImage(this.getLeague().getIconPath(), leagueIconImagePath);
+        if (this.hasAdditionalProfile) Util.copyImage(this.getLeague().getIconPath(), leagueIconImagePath);
         else Util.copyImage(Constant.PATH_OF_UNKNOWN_IMAGE, leagueIconImagePath);
 
         String clanIconPath = imageDirPath + "clanIcon.png";
