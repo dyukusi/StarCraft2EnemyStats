@@ -1,9 +1,10 @@
 public class Constant {
     public static String OWN_NAME = "Dyukusi";
 
-    public static final String BASE_URL_OF_SC2LOGS_API_SEARCH = "http://ec2-13-115-175-110.ap-northeast-1.compute.amazonaws.com:8080/search?region=%s&name=%s&race=%s&rating=%d";
-    public static final String BASE_URL_OF_SC2LOGS_API_UPDATE = "http://ec2-13-115-175-110.ap-northeast-1.compute.amazonaws.com:8080/update?regionId=%d&profileId=%d&raceId=%d";
-    public static final String BASE_URL_OF_SC2LOGS_API_LEAGUE = "http://ec2-13-115-175-110.ap-northeast-1.compute.amazonaws.com:8080/league?regionId=%d";
+    public static final String BASE_URL_OF_SC2LOGS_API_SEARCH = "http://ec2-13-115-175-110.ap-northeast-1.compute.amazonaws.com:8080/api/profiles/%s/%s/%s";
+    public static final String BASE_URL_OF_SC2LOGS_API_SEARCH_WITH_RATING = "http://ec2-13-115-175-110.ap-northeast-1.compute.amazonaws.com:8080/api/profiles/%s/%s/%s?rating=%d";
+    public static final String BASE_URL_OF_SC2LOGS_API_UPDATE = "http://ec2-13-115-175-110.ap-northeast-1.compute.amazonaws.com:8080/api/profiles/update?region=%s&profileId=%d&race=%s";
+    public static final String BASE_URL_OF_SC2LOGS_API_LEAGUE = "http://ec2-13-115-175-110.ap-northeast-1.compute.amazonaws.com:8080/api/leagues/%s";
 
     public static final String BASE_URL_OF_CLIENT_UI_API = "http://localhost:6119/ui";
     public static final String BASE_URL_OF_CLIENT_GAME_API = "http://localhost:6119/game";

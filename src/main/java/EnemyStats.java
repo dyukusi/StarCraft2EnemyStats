@@ -33,7 +33,7 @@ public class EnemyStats implements Runnable{
             }
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(3000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -55,9 +55,9 @@ public class EnemyStats implements Runnable{
         // request update info
         Util.httpGet(String.format(
                 Constant.BASE_URL_OF_SC2LOGS_API_UPDATE,
-                own.getRegion().getId(),
+                own.getRegion().name(),
                 own.getProfileId(),
-                own.getRace().getId()
+                own.getRace().name()
         ));
 
         Player updatedOwn = new Player(
@@ -67,6 +67,8 @@ public class EnemyStats implements Runnable{
                 own.getUserType(),
                 own.getRace()
         );
+
+        updatedOwn.getAdditionalProfile(-1);
 
         System.out.println("newMMR: " + updatedOwn.getRating());
 

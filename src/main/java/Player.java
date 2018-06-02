@@ -49,8 +49,14 @@ public class Player {
         }
 
         try {
+            JsonArray profileJsonArray;
+
             // fetch profile by sc2logs api if user
-            JsonArray profileJsonArray = Util.getJsonByURL(String.format(Constant.BASE_URL_OF_SC2LOGS_API_SEARCH, this.region.name(), name, this.race.name(), rating)).getAsJsonArray();
+            if (rating >= 0) {
+                profileJsonArray = Util.getJsonByURL(String.format(Constant.BASE_URL_OF_SC2LOGS_API_SEARCH_WITH_RATING, this.region.name(), name, this.race.name(), rating)).getAsJsonArray();
+            } else {
+                profileJsonArray = Util.getJsonByURL(String.format(Constant.BASE_URL_OF_SC2LOGS_API_SEARCH, this.region.name(), name, this.race.name())).getAsJsonArray();
+            }
             if (profileJsonArray.size() <= 0) return;
 
             // regard first element as correct one. this depends on how is API implemented

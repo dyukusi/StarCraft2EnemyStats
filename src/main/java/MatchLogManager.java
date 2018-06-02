@@ -30,8 +30,7 @@ public class MatchLogManager {
             ));
         }
 
-        //JsonArray leagueJsonArray = Util.getJsonByURL(String.format(Constant.BASE_URL_OF_SC2LOGS_API_LEAGUE, Main.g.getRegion().getId())).getAsJsonArray();
-        JsonArray leagueJsonArray = Util.getJsonByURL(String.format(Constant.BASE_URL_OF_SC2LOGS_API_LEAGUE, 1)).getAsJsonArray();
+        JsonArray leagueJsonArray = Util.getJsonByURL(String.format(Constant.BASE_URL_OF_SC2LOGS_API_LEAGUE, Main.g.getRegion().name())).getAsJsonArray();
         leagues = new ArrayList<>();
 
         leagueJsonArray.forEach(e -> {
